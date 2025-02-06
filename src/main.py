@@ -1,19 +1,24 @@
-from fastapi import FastAPI, Request, Form, HTTPException
+from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import urllib.parse
 from src.scheduler import start_scheduler
 from src.auth import router as auth_router
+from src.auth import get_current_user
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 # 認証用エンドポイントの追加
 app.include_router(auth_router)
 
-@app.on_event("startup")
-async def startup_event():
-    # スケジューラーを起動する
-    start_scheduler()
+#@app.on_event("startup")
+#async def startup_event():
+#    # スケジューラーを起動する
+#    start_scheduler()
+
+@app.get("/users/me")
+async def read_users_me(current_user: dict = Depends(get_current_user)):
+    return current_user
 
 @app.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
