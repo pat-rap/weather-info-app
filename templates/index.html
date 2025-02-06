@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>都道府県・カテゴリ選択</title>
+</head>
+<body>
+    <h1>気象情報フィルタ</h1>
+    <form action="/select" method="post">
+        <label for="prefecture">都道府県:</label>
+        <select name="prefecture" id="prefecture">
+            <option value="北海道" {% if prefecture == "北海道" %}selected{% endif %}>北海道</option>
+            <option value="青森" {% if prefecture == "青森" %}selected{% endif %}>青森</option>
+            <!-- 必要に応じて他の都道府県も追加 -->
+        </select>
+        <br><br>
+        <label for="category">カテゴリ:</label>
+        <select name="category" id="category">
+            <option value="天気概況" {% if category == "天気概況" %}selected{% endif %}>天気概況</option>
+            <option value="警報・注意報" {% if category == "警報・注意報" %}selected{% endif %}>警報・注意報</option>
+            <option value="地震・火山" {% if category == "地震・火山" %}selected{% endif %}>地震・火山</option>
+            <option value="その他" {% if category == "その他" %}selected{% endif %}>その他</option>
+        </select>
+        <br><br>
+        <button type="submit">表示</button>
+    </form>
+</body>
+</html>
