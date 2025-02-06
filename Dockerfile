@@ -1,4 +1,4 @@
-# ベースイメージとしてPython 3.9 slim を利用
+# ベースイメージとしてPython 3.13 slim を利用
 FROM python:3.13-slim
 
 # 作業ディレクトリの設定
