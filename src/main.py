@@ -3,9 +3,12 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import urllib.parse
 from src.scheduler import start_scheduler
+from src.auth import router as auth_router
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+# 認証用エンドポイントの追加
+app.include_router(auth_router)
 
 @app.on_event("startup")
 async def startup_event():
