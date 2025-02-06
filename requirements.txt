@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+psycopg2-binary==2.9.9
+feedparser
+requests
+python-dateutil
+aiohttp
+async-timeout
+pytz
+authlib

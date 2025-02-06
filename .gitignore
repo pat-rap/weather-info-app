@@ -1,0 +1,6 @@
+misc/
+__pycache__/
+*.log
+*.pyc
+.venv/
+.python-version
