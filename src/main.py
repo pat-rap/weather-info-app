@@ -1,20 +1,26 @@
-from fastapi import FastAPI, Request, Form, HTTPException, Depends
+from fastapi import FastAPI, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import urllib.parse
+from contextlib import asynccontextmanager
+
 from src.scheduler import start_scheduler
 from src.auth import router as auth_router
 from src.auth import get_current_user
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # アプリ起動時の処理
+    start_scheduler()
+    # lifespan の中で起動時の処理 (yield の前) と終了時の処理 (yield の後) を書ける
+    yield
+    # アプリ終了時の処理（必要に応じて）
+
+app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="templates")
+
 # 認証用エンドポイントの追加
 app.include_router(auth_router)
-
-@app.on_event("startup")
-async def startup_event():
-    # スケジューラーを起動する
-    start_scheduler()
 
 @app.get("/users/me")
 async def read_users_me(current_user: dict = Depends(get_current_user)):
