@@ -11,10 +11,10 @@ templates = Jinja2Templates(directory="templates")
 # 認証用エンドポイントの追加
 app.include_router(auth_router)
 
-#@app.on_event("startup")
-#async def startup_event():
-#    # スケジューラーを起動する
-#    start_scheduler()
+@app.on_event("startup")
+async def startup_event():
+    # スケジューラーを起動する
+    start_scheduler()
 
 @app.get("/users/me")
 async def read_users_me(current_user: dict = Depends(get_current_user)):
