@@ -2,9 +2,15 @@ from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import urllib.parse
+from src.scheduler import start_scheduler
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+@app.on_event("startup")
+async def startup_event():
+    # スケジューラーを起動する
+    start_scheduler()
 
 @app.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
