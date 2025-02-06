@@ -34,5 +34,8 @@ def start_scheduler():
                           args=[feed_url, category, "長期"],
                           id=f"long_{category}")
 
+    # ダウンロード量カウンターを毎日0時にリセットするジョブを追加
+    scheduler.add_job(rss_fetcher.reset_download_counter, 'cron', hour=0, minute=0, id="reset_download_counter")
+
     scheduler.start()
     print("Scheduler started")

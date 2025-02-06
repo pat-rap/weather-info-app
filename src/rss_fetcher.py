@@ -49,9 +49,9 @@ async def fetch_feed(url: str, timeout: float = 10.0, use_limit: bool = True) ->
     if use_limit:
         # レートリミッターを使って制限を適用
         async with high_freq_limiter:
-            response = await _fetch(url, timeout)
+            response = await _fetch(url, timeout, headers)
     else:
-        response = await _fetch(url, timeout)
+        response = await _fetch(url, timeout, headers)
 
     # 304 Not Modified の場合、キャッシュ済みのコンテンツを利用
     if response.status_code == 304:
@@ -84,6 +84,14 @@ async def _fetch(url: str, timeout: float, headers: dict) -> httpx.Response:
         response = await client.get(url, headers=headers)
         response.raise_for_status()
         return response
+
+def reset_download_counter():
+    """
+    ダウンロード量カウンターをリセットする関数。
+    """
+    global total_downloaded_bytes
+    total_downloaded_bytes = 0
+    print("[Reset] Total downloaded bytes have been reset to 0.")
 
 # デバッグ用：直接実行して動作確認するためのコード
 if __name__ == "__main__":
