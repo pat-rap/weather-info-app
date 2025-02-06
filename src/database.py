@@ -6,7 +6,7 @@ import os
 from src import models  # models.py をインポート
 
 # 接続文字列は環境変数などから取得するのが望ましいです。
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://username:password@localhost/weatherdb")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:mM3JAHrS@localhost/weatherdb")
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 
