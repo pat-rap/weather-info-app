@@ -2,5 +2,5 @@ misc/
 __pycache__/
 *.log
 *.pyc
-.venv/
+WICA/
 .python-version
